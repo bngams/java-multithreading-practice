@@ -15,7 +15,7 @@ public class Exo5 {
 
 	public static void main(String[] args) {
 		
-		OutputWriter outWriter ;
+		OutputWriter outWriter;
 		try {
 			// Writer object
 			outWriter = new OutputWriter(new File("file-output.txt"));
@@ -25,6 +25,13 @@ public class Exo5 {
 		      "file2.txt",
 		      "file3.txt",
 		    };
+			
+			//  other implementation
+			for (int i = 0; i < files.length; i++) {
+				System.out.println("Launching new thread for file " + files[i] );
+				new Thread(new ReadAndWrite(new File(files[i]), outWriter)).start();
+			}
+			
 			
 			ExecutorService executorService = Executors.newCachedThreadPool();
 			// launch a thread for each file 

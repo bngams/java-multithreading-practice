@@ -1,10 +1,13 @@
 package exo2;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class CounterOrder implements Runnable {
 	
 	private String name;
 	private int max;
 	private static int order;
+	private static AtomicInteger atomicOrder;
 	
 	public CounterOrder(String name, int max) {
 	    this.name = name;
@@ -27,7 +30,9 @@ public class CounterOrder implements Runnable {
 		    }
 		    System.out.println(name + " : " + i);
 		}
-		System.out.println("*** " + name + " a fini de compter jusqu'à " + max + " en position " + order++);
+		synchronized (this) {
+			System.out.println("*** " + name + " a fini de compter jusqu'à " + max + " en position " + atomicOrder.getAndIncrement());
+		}
 	}
 
 	
